@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/injammed/SYNTEL/spec/signed-envelope.schema.json",
+  "title": "SYNTEL Signed Message Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "envelope_id",
+    "protocol_version",
+    "sender_agent",
+    "recipient_agent",
+    "message_type",
+    "created_at",
+    "expires_at",
+    "payload_ref",
+    "payload_hash",
+    "signature",
+    "audit"
+  ],
+  "properties": {
+    "envelope_id": { "type": "string", "pattern": "^SYN-ENV-[0-9A-Z_-]+$" },
+    "protocol_version": { "type": "string", "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "sender_agent": { "$ref": "#/$defs/agent_ref" },
+    "recipient_agent": { "$ref": "#/$defs/agent_ref" },
+    "message_type": {
+      "type": "string",
+      "enum": ["capability_discovery", "intent_request", "task_contract", "verification_receipt", "escalation", "error"]
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "expires_at": { "type": "string", "format": "date-time" },
+    "payload_ref": { "type": "string", "minLength": 1 },
+    "payload_hash": { "type": "string", "pattern": "^sha256:[a-fA-F0-9]{64}$" },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "key_id", "value"],
+      "properties": {
+        "algorithm": { "type": "string", "enum": ["ed25519", "secp256k1", "rsa-pss-sha256"] },
+        "key_id": { "type": "string", "minLength": 1 },
+        "value": { "type": "string", "minLength": 1 }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trace_id", "replayable", "human_escalation_allowed"],
+      "properties": {
+        "trace_id": { "type": "string", "minLength": 1 },
+        "replayable": { "type": "boolean", "const": true },
+        "human_escalation_allowed": { "type": "boolean" },
+        "notes": { "type": "string" }
+      }
+    }
+  },
+  "$defs": {
+    "agent_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_id", "organization_id", "registry_url"],
+      "properties": {
+        "agent_id": { "type": "string", "minLength": 1 },
+        "organization_id": { "type": "string", "minLength": 1 },
+        "registry_url": { "type": "string", "format": "uri" }
+      }
+    }
+  }
+}

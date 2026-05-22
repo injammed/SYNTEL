@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/injammed/SYNTEL/spec/task-contract.schema.json",
+  "title": "SYNTEL Bounded Task Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_id",
+    "protocol_version",
+    "parties",
+    "objective",
+    "scope",
+    "constraints",
+    "deliverables",
+    "verification",
+    "human_escalation",
+    "audit"
+  ],
+  "properties": {
+    "contract_id": { "type": "string", "pattern": "^SYN-CON-[0-9A-Z_-]+$" },
+    "protocol_version": { "type": "string", "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "parties": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requester", "provider"],
+      "properties": {
+        "requester": { "$ref": "#/$defs/agent_ref" },
+        "provider": { "$ref": "#/$defs/agent_ref" }
+      }
+    },
+    "objective": { "type": "string", "minLength": 1 },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["included", "excluded"],
+      "properties": {
+        "included": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "excluded": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["deadline", "spend_limit", "data_policy"],
+      "properties": {
+        "deadline": { "type": "string", "format": "date-time" },
+        "spend_limit": { "type": "number", "minimum": 0 },
+        "currency": { "type": "string" },
+        "data_policy": { "type": "string", "minLength": 1 },
+        "settlement_allowed": { "type": "boolean", "default": false }
+      }
+    },
+    "deliverables": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "receipt_required"],
+      "properties": {
+        "method": { "type": "string", "enum": ["human_review", "automated_test", "third_party_attestation", "audit_replay"] },
+        "receipt_required": { "type": "boolean", "const": true }
+      }
+    },
+    "human_escalation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_on_failure", "contact_ref"],
+      "properties": {
+        "required_on_failure": { "type": "boolean" },
+        "contact_ref": { "type": "string", "minLength": 1 }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trace_id", "replayable"],
+      "properties": {
+        "trace_id": { "type": "string", "minLength": 1 },
+        "replayable": { "type": "boolean", "const": true }
+      }
+    }
+  },
+  "$defs": {
+    "agent_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_id", "organization_id", "registry_url"],
+      "properties": {
+        "agent_id": { "type": "string", "minLength": 1 },
+        "organization_id": { "type": "string", "minLength": 1 },
+        "registry_url": { "type": "string", "format": "uri" }
+      }
+    }
+  }
+}

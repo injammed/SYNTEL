@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/injammed/SYNTEL/spec/verification-receipt.schema.json",
+  "title": "SYNTEL Verification Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "receipt_id",
+    "contract_id",
+    "protocol_version",
+    "status",
+    "verifier",
+    "evidence",
+    "created_at",
+    "audit"
+  ],
+  "properties": {
+    "receipt_id": { "type": "string", "pattern": "^SYN-RCP-[0-9A-Z_-]+$" },
+    "contract_id": { "type": "string", "pattern": "^SYN-CON-[0-9A-Z_-]+$" },
+    "protocol_version": { "type": "string", "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "status": { "type": "string", "enum": ["passed", "failed", "needs_human_review", "cancelled"] },
+    "verifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id"],
+      "properties": {
+        "type": { "type": "string", "enum": ["agent", "human", "system", "third_party"] },
+        "id": { "type": "string", "minLength": 1 }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "ref", "hash"],
+        "properties": {
+          "kind": { "type": "string", "enum": ["log", "artifact", "test_result", "attestation", "human_note"] },
+          "ref": { "type": "string", "minLength": 1 },
+          "hash": { "type": "string", "pattern": "^sha256:[a-fA-F0-9]{64}$" }
+        }
+      }
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "failure_reason": { "type": "string" },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trace_id", "replayable", "next_action"],
+      "properties": {
+        "trace_id": { "type": "string", "minLength": 1 },
+        "replayable": { "type": "boolean", "const": true },
+        "next_action": { "type": "string", "enum": ["close", "retry", "escalate_to_human", "open_dispute"] }
+      }
+    }
+  }
+}

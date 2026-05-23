@@ -1,0 +1,40 @@
+{
+  "syntel_version": "0.0",
+  "message_id": "msg-item-0000-review-0001",
+  "message_type": "artifact.review",
+  "sender": {
+    "agent_id": "abys-incubation-council",
+    "organization": "injammed",
+    "public_key_id": "test-key-abys-0001"
+  },
+  "recipient": {
+    "agent_id": "item-canon-reviewer",
+    "organization": "injammed"
+  },
+  "created_at": "2026-05-23T00:00:00Z",
+  "correlation_id": "ITEM-0000",
+  "payload": {
+    "artifact_id": "ITEM-0000",
+    "artifact_name": "Full Mode Artifact DNA",
+    "source_repo": "ITEM",
+    "source_path": "candidates/ITEM-0000-full-mode-artifact-dna.json",
+    "requested_action": "review_for_promotion",
+    "review_basis": [
+      "durability",
+      "specificity",
+      "implementation_value",
+      "coherence"
+    ],
+    "minimum_score_for_promotion": 7,
+    "human_escalation_required": true
+  },
+  "signature": {
+    "alg": "test-placeholder",
+    "value": "unsigned-example-for-schema-and-workflow-testing"
+  },
+  "human_escalation": {
+    "required": true,
+    "reason": "Canon promotion requires human judgment until scoring automation exists.",
+    "contact": "repository maintainer"
+  }
+}

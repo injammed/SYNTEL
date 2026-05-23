@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/injammed/SYNTEL/schemas/signed-envelope.schema.json",
+  "title": "SYNTEL Signed Envelope v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "syntel_version",
+    "message_id",
+    "message_type",
+    "sender",
+    "recipient",
+    "created_at",
+    "payload",
+    "signature"
+  ],
+  "properties": {
+    "syntel_version": { "type": "string", "const": "0.0" },
+    "message_id": { "type": "string", "minLength": 8 },
+    "message_type": {
+      "type": "string",
+      "enum": [
+        "capability.discovery",
+        "intent.proposal",
+        "task.contract",
+        "verification.receipt",
+        "artifact.review",
+        "human.escalation"
+      ]
+    },
+    "sender": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_id", "organization", "public_key_id"],
+      "properties": {
+        "agent_id": { "type": "string" },
+        "organization": { "type": "string" },
+        "public_key_id": { "type": "string" }
+      }
+    },
+    "recipient": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_id", "organization"],
+      "properties": {
+        "agent_id": { "type": "string" },
+        "organization": { "type": "string" }
+      }
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "expires_at": { "type": "string", "format": "date-time" },
+    "correlation_id": { "type": "string" },
+    "payload": { "type": "object", "additionalProperties": true },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alg", "value"],
+      "properties": {
+        "alg": { "type": "string", "enum": ["ed25519", "test-placeholder"] },
+        "value": { "type": "string" }
+      }
+    },
+    "human_escalation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "required": { "type": "boolean" },
+        "reason": { "type": "string" },
+        "contact": { "type": "string" }
+      }
+    }
+  }
+}

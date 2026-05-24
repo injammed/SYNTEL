@@ -1,0 +1,37 @@
+{
+  "syntel_version": "0.0",
+  "message_id": "syntel-artifact-review-0001",
+  "message_type": "artifact.review",
+  "sender": {
+    "agent_id": "abys-incubation-council",
+    "organization": "injammed",
+    "public_key_id": "test-placeholder-key"
+  },
+  "recipient": {
+    "agent_id": "item-canon-curator",
+    "organization": "injammed"
+  },
+  "created_at": "2026-05-24T00:00:00Z",
+  "correlation_id": "ITEM-0000",
+  "payload": {
+    "artifact_id": "ITEM-0000",
+    "artifact_name": "Full Mode Artifact DNA",
+    "review_decision": "refine",
+    "classification": "candidate",
+    "reason": "The candidate is durable and structurally valuable, but promotion should wait until validator coverage and ABYS task emission exist.",
+    "required_actions": [
+      "Validate candidate JSON against ITEM artifact schema.",
+      "Create ABYS task packet for incomplete promotion criteria.",
+      "Add canon promotion checklist to ITEM docs."
+    ],
+    "terminal_output": "issue"
+  },
+  "signature": {
+    "alg": "test-placeholder",
+    "value": "unsigned-example-for-schema-and-product-design"
+  },
+  "human_escalation": {
+    "required": false,
+    "reason": "Non-binding example envelope for protocol validation and documentation."
+  }
+}

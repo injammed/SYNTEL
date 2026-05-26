@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/injammed/SYNTEL/spec/syntel-protocol-element.schema.json",
+  "title": "SYNTEL Protocol Element",
+  "description": "Machine-readable contract for bounded A2A/M2M coordination. SYNTEL specifies identity, envelopes, state transitions, verification, audit, and safe interruption; ABYS implements; ITEM supplies artifact payloads.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "status",
+    "name",
+    "parties",
+    "identity_and_trust",
+    "message_shape",
+    "state_transition",
+    "verification_and_audit",
+    "failure_and_interruption",
+    "handoffs",
+    "protocol_score"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^SYNTEL-[A-Z0-9_-]{3,}$"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["candidate", "spec", "deprecated"]
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "parties": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sender", "receiver", "authority", "observer", "human_escalation"],
+      "properties": {
+        "sender": { "type": "string", "minLength": 1 },
+        "receiver": { "type": "string", "minLength": 1 },
+        "authority": { "type": "string", "minLength": 1 },
+        "observer": { "type": "string", "minLength": 1 },
+        "human_escalation": { "type": "string", "minLength": 1 }
+      }
+    },
+    "identity_and_trust": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identifier", "verification", "authorization", "trust_assumption"],
+      "properties": {
+        "identifier": { "type": "string", "minLength": 1 },
+        "verification": { "type": "string", "minLength": 1 },
+        "authorization": { "type": "string", "minLength": 1 },
+        "trust_assumption": { "type": "string", "minLength": 1 }
+      }
+    },
+    "message_shape": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["envelope", "required_fields", "payload", "signature"],
+      "properties": {
+        "envelope": { "type": "string", "minLength": 1 },
+        "required_fields": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "payload": { "type": "string", "minLength": 1 },
+        "signature": { "type": "string", "minLength": 1 }
+      }
+    },
+    "state_transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["states", "valid_transitions", "expiry_rule"],
+      "properties": {
+        "states": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "valid_transitions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "expiry_rule": { "type": "string", "minLength": 1 }
+      }
+    },
+    "verification_and_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receipt", "audit_log", "replay_rule", "conformance_test"],
+      "properties": {
+        "receipt": { "type": "string", "minLength": 1 },
+        "audit_log": { "type": "string", "minLength": 1 },
+        "replay_rule": { "type": "string", "minLength": 1 },
+        "conformance_test": { "type": "string", "minLength": 1 }
+      }
+    },
+    "failure_and_interruption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["safe_failure_mode", "reversibility", "human_interrupt"],
+      "properties": {
+        "safe_failure_mode": { "type": "string", "minLength": 1 },
+        "reversibility": { "type": "string", "minLength": 1 },
+        "human_interrupt": { "type": "string", "minLength": 1 }
+      }
+    },
+    "handoffs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["abys", "item"],
+      "properties": {
+        "abys": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "item": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "protocol_score": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "party_definition",
+        "identity_auth",
+        "message_shape",
+        "constraint_boundary",
+        "verification_audit",
+        "repo_boundary"
+      ],
+      "properties": {
+        "party_definition": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "identity_auth": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "message_shape": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "constraint_boundary": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "verification_audit": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "repo_boundary": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "total": { "type": "integer", "minimum": 0, "maximum": 12 }
+      }
+    }
+  }
+}

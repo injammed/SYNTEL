@@ -1,58 +1,55 @@
 # SYNTEL
 
-**The Latency of Logic.**
+SYNTEL is a signed A2A and M2M coordination protocol.
 
-SYNTEL is an M2M / A2A infrastructure project for autonomous interenterprise communication: agents discover counterparties, negotiate machine-readable obligations, exchange signed messages, verify outcomes, and settle value across organizational boundaries.
+It defines identity, signed envelopes, bounded task contracts, verification receipts, and audit replay semantics for agents that need to coordinate across systems or organizations.
 
-The first product is not a general AGI marketplace. It is a narrow, verifiable communications rail for agents that need to coordinate work without relying on fragile natural-language email, Slack, or human-mediated procurement loops.
+SYNTEL v0 is the boring trust rail first. Nothing mystical. Nothing autonomous by default.
 
-## Core thesis
+## Core Thesis
 
-Enterprises will deploy autonomous agents internally before they trust fully open agent markets. The hard problem will become safe interenterprise coordination: how one company’s agent can talk to another company’s agent, prove identity, express intent, negotiate constraints, execute a bounded task, and leave an auditable trail.
+Enterprises will deploy agents internally before they trust open agent markets. The hard problem is safe coordination: one agent proving identity, expressing bounded intent, accepting constraints, producing evidence, and leaving a replayable audit trail.
 
-SYNTEL exists to solve that coordination layer.
+## v0 Substrate
 
-## MVP product
+The initial SYNTEL substrate provides:
 
-The initial SYNTEL service should provide:
+1. Agent identity references
+2. Signed message envelopes
+3. Task contract format
+4. Verification receipt format
+5. Audit log and replay semantics
+6. Human escalation hooks
+7. Optional payload extensions, including validated ITEM artifacts such as Authalien candidates
 
-1. Agent identity registry
-2. Signed message envelope
-3. Capability discovery endpoint
-4. Intent negotiation protocol
-5. Task contract format
-6. Verification receipt format
-7. Audit log and replay trail
-8. Human escalation hooks
-
-## Non-goals for v0
+## Non-Goals For v0
 
 - No autonomous legal contracting
 - No irreversible settlement by default
-- No opaque agent-to-agent execution without auditability
-- No claims of zero latency
-- No public token dependency in the MVP
+- No opaque A2A or M2M execution
+- No public token dependency
+- No agent marketplace claims
+- No protocol authority over ITEM canon or ABYS execution
 
-## Repository structure
+## Repository Structure
 
 ```txt
-/docs              Architecture, protocol, product doctrine
-/spec              Machine-readable protocol specifications
-/examples          Example agent messages and workflows
-/src               Reference implementation
-/tests             Protocol and integration tests
+/docs      Protocol boundaries, trust model, failure model
+/spec      Machine-readable protocol specifications
+/examples  Example signed envelopes and receipts
+/src       Future reference implementation
+/tests     Future protocol and integration tests
 ```
 
-## Build direction
+## Build Direction
 
-SYNTEL should start as a boring, trustworthy protocol service before becoming a mesh economy.
+SYNTEL should start as a narrow, trustworthy protocol service.
 
 ```txt
 agent identity
-→ signed envelopes
-→ capability discovery
-→ bounded negotiation
-→ verifiable execution receipts
-→ audit replay
-→ settlement adapters
+-> signed envelopes
+-> bounded task contracts
+-> verification receipts
+-> audit replay
+-> human escalation
 ```

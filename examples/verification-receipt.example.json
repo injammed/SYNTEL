@@ -1,0 +1,25 @@
+{
+  "receipt_id": "SYN-RCP-0001",
+  "contract_id": "SYN-CON-0001",
+  "protocol_version": "v0.1.0",
+  "status": "needs_human_review",
+  "verifier": {
+    "type": "system",
+    "id": "syntel-v0-fixture-verifier"
+  },
+  "evidence": [
+    {
+      "kind": "payload_reference",
+      "ref": "examples/authalien-envelope-extension.example.json",
+      "hash": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ],
+  "created_at": "2026-05-28T00:05:00Z",
+  "failure_reason": "Authalien payload is accepted only as a validated reference and still requires human review before downstream use.",
+  "audit": {
+    "trace_id": "trace-syntel-0001",
+    "replayable": true,
+    "settlement_final": false,
+    "next_action": "escalate_to_human"
+  }
+}

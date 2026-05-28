@@ -1,0 +1,21 @@
+{
+  "extension_id": "SYN-AUTHALIEN-0001",
+  "protocol_version": "v0.1.0",
+  "channel": "A2A",
+  "item_candidate_ref": "injammed/ITEM:candidates/authalien-primal-glyph-set.json",
+  "abys_validator_task_ref": "injammed/ABYS:examples/task-packets/authalien-validator-task.json",
+  "payload_kind": "glyph_set_reference",
+  "payload_hash": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "allowed_uses": ["display", "routing", "validation", "receipt_attachment"],
+  "execution_policy": {
+    "autonomous_execution_allowed": false,
+    "legal_commitment_allowed": false,
+    "settlement_allowed": false
+  },
+  "audit": {
+    "trace_id": "trace-syntel-0001",
+    "replayable": true,
+    "human_escalation_allowed": true,
+    "notes": "Authalien is carried for A2A/M2M coordination only as a validated ITEM candidate reference."
+  }
+}

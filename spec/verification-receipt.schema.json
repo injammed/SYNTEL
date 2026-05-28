@@ -36,7 +36,7 @@
         "additionalProperties": false,
         "required": ["kind", "ref", "hash"],
         "properties": {
-          "kind": { "type": "string", "enum": ["log", "artifact", "test_result", "attestation", "human_note"] },
+          "kind": { "type": "string", "enum": ["log", "artifact", "test_result", "attestation", "human_note", "payload_reference"] },
           "ref": { "type": "string", "minLength": 1 },
           "hash": { "type": "string", "pattern": "^sha256:[a-fA-F0-9]{64}$" }
         }
@@ -47,10 +47,11 @@
     "audit": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["trace_id", "replayable", "next_action"],
+      "required": ["trace_id", "replayable", "settlement_final", "next_action"],
       "properties": {
         "trace_id": { "type": "string", "minLength": 1 },
         "replayable": { "type": "boolean", "const": true },
+        "settlement_final": { "type": "boolean", "const": false },
         "next_action": { "type": "string", "enum": ["close", "retry", "escalate_to_human", "open_dispute"] }
       }
     }

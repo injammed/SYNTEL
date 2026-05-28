@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/injammed/SYNTEL/spec/authalien-envelope-extension.schema.json",
+  "title": "SYNTEL Authalien A2A/M2M Payload Extension",
+  "description": "Payload extension for carrying validated ITEM Authalien candidate references inside signed SYNTEL envelopes.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "extension_id",
+    "protocol_version",
+    "channel",
+    "item_candidate_ref",
+    "abys_validator_task_ref",
+    "payload_kind",
+    "payload_hash",
+    "execution_policy",
+    "audit"
+  ],
+  "properties": {
+    "extension_id": { "type": "string", "pattern": "^SYN-AUTHALIEN-[0-9A-Z_-]+$" },
+    "protocol_version": { "type": "string", "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "channel": { "type": "string", "enum": ["A2A", "M2M"] },
+    "item_candidate_ref": { "type": "string", "minLength": 1 },
+    "abys_validator_task_ref": { "type": "string", "minLength": 1 },
+    "payload_kind": { "type": "string", "enum": ["glyph_set_reference", "symbolic_system_reference", "validated_artifact_reference"] },
+    "payload_hash": { "type": "string", "pattern": "^sha256:[a-fA-F0-9]{64}$" },
+    "allowed_uses": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["display", "classification", "routing", "validation", "receipt_attachment"] },
+      "uniqueItems": true
+    },
+    "execution_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["autonomous_execution_allowed", "legal_commitment_allowed", "settlement_allowed"],
+      "properties": {
+        "autonomous_execution_allowed": { "type": "boolean", "const": false },
+        "legal_commitment_allowed": { "type": "boolean", "const": false },
+        "settlement_allowed": { "type": "boolean", "const": false }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trace_id", "replayable", "human_escalation_allowed"],
+      "properties": {
+        "trace_id": { "type": "string", "minLength": 1 },
+        "replayable": { "type": "boolean", "const": true },
+        "human_escalation_allowed": { "type": "boolean", "const": true },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

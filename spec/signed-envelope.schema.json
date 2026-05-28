@@ -24,11 +24,12 @@
     "recipient_agent": { "$ref": "#/$defs/agent_ref" },
     "message_type": {
       "type": "string",
-      "enum": ["capability_discovery", "intent_request", "task_contract", "verification_receipt", "escalation", "error"]
+      "enum": ["capability_discovery", "intent_request", "task_contract", "verification_receipt", "artifact_payload", "escalation", "error"]
     },
     "created_at": { "type": "string", "format": "date-time" },
     "expires_at": { "type": "string", "format": "date-time" },
     "payload_ref": { "type": "string", "minLength": 1 },
+    "payload_schema": { "type": "string", "minLength": 1 },
     "payload_hash": { "type": "string", "pattern": "^sha256:[a-fA-F0-9]{64}$" },
     "signature": {
       "type": "object",
@@ -43,11 +44,12 @@
     "audit": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["trace_id", "replayable", "human_escalation_allowed"],
+      "required": ["trace_id", "replayable", "human_escalation_allowed", "autonomous_execution_allowed"],
       "properties": {
         "trace_id": { "type": "string", "minLength": 1 },
         "replayable": { "type": "boolean", "const": true },
         "human_escalation_allowed": { "type": "boolean" },
+        "autonomous_execution_allowed": { "type": "boolean", "const": false },
         "notes": { "type": "string" }
       }
     }

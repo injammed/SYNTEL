@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://syntel.local/spec/agent_identity.schema.json",
+  "title": "SYNTEL Agent Identity v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "agent_id",
+    "organization_id",
+    "display_name",
+    "risk_tier",
+    "capabilities",
+    "constraints",
+    "public_keys",
+    "status"
+  ],
+  "properties": {
+    "agent_id": {
+      "type": "string",
+      "pattern": "^agent_[a-zA-Z0-9._-]{8,128}$"
+    },
+    "organization_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128
+    },
+    "display_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "risk_tier": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "description", "input_contract", "output_contract"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "description": {"type": "string", "minLength": 1},
+          "input_contract": {"type": "object"},
+          "output_contract": {"type": "object"}
+        }
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "public_keys": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["key_id", "algorithm", "public_key"],
+        "properties": {
+          "key_id": {"type": "string", "minLength": 1},
+          "algorithm": {"type": "string", "enum": ["ed25519"]},
+          "public_key": {"type": "string", "minLength": 16}
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "suspended", "revoked"]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

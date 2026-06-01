@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://syntel.local/spec/delegation_chain.schema.json",
+  "title": "SYNTEL Delegation Chain v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["chain_id", "delegations"],
+  "properties": {
+    "chain_id": {"type": "string", "minLength": 8},
+    "delegations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["delegator", "delegate", "scope", "constraints", "issued_at", "expires_at", "signature"],
+        "properties": {
+          "delegator": {"type": "string", "minLength": 3},
+          "delegate": {"type": "string", "minLength": 3},
+          "scope": {"type": "string", "minLength": 1},
+          "constraints": {"type": "array", "items": {"type": "string"}},
+          "issued_at": {"type": "string", "format": "date-time"},
+          "expires_at": {"type": "string", "format": "date-time"},
+          "signature": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["key_id", "algorithm", "value"],
+            "properties": {
+              "key_id": {"type": "string"},
+              "algorithm": {"type": "string", "enum": ["ed25519"]},
+              "value": {"type": "string", "minLength": 16}
+            }
+          }
+        }
+      }
+    }
+  }
+}

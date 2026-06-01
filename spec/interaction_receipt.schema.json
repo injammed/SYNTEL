@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://syntel.local/spec/interaction_receipt.schema.json",
+  "title": "SYNTEL Interaction Receipt v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "receipt_id",
+    "sender_agent_id",
+    "receiver_agent_id",
+    "timestamp",
+    "intent",
+    "authority_scope",
+    "input_hash",
+    "output_hash",
+    "status",
+    "signature"
+  ],
+  "properties": {
+    "receipt_id": {"type": "string", "minLength": 8},
+    "sender_agent_id": {"type": "string", "minLength": 3},
+    "receiver_agent_id": {"type": "string", "minLength": 3},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "intent": {"type": "string", "minLength": 1},
+    "authority_scope": {"type": "string", "minLength": 1},
+    "input_hash": {"type": "string", "minLength": 16},
+    "output_hash": {"type": "string", "minLength": 16},
+    "status": {"type": "string", "enum": ["accepted", "rejected", "completed", "failed", "revoked"]},
+    "evidence_uri": {"type": "string"},
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key_id", "algorithm", "value"],
+      "properties": {
+        "key_id": {"type": "string"},
+        "algorithm": {"type": "string", "enum": ["ed25519"]},
+        "value": {"type": "string", "minLength": 16}
+      }
+    }
+  }
+}
